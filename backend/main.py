@@ -14,7 +14,9 @@ app = FastAPI(title="Madera Precisa API", version="1.0.0")
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
-    "https://madera-precisa.com",  # Production domain placeholder
+    "https://madera-precisa.com",
+    "https://www.madera-precisa.com",
+    "https://*.onrender.com",  # Allow Render previews
 ]
 
 app.add_middleware(
