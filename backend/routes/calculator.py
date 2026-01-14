@@ -1,6 +1,10 @@
 from fastapi import APIRouter, HTTPException, Depends
-from schemas import CalculationRequest, CalculationResponse
-from optimiza_corte import OptimizadorMecatronicoFinal
+try:
+    from backend.schemas import CalculationRequest, CalculationResponse
+    from backend.optimiza_corte import OptimizadorMecatronicoFinal
+except ImportError:
+    from schemas import CalculationRequest, CalculationResponse
+    from optimiza_corte import OptimizadorMecatronicoFinal
 import os
 
 router = APIRouter()

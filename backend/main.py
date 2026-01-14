@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from database import engine, Base
+try:
+    from backend.database import engine, Base
+except ImportError:
+    from database import engine, Base
 import os
 from dotenv import load_dotenv
 
@@ -34,7 +37,10 @@ os.makedirs("generated", exist_ok=True)
 app.mount("/files", StaticFiles(directory="generated"), name="files")
 
 # Import and include routers
-from routes import quotes, calculator, production
+try:
+    from backend.routes import quotes, calculator, production
+except ImportError:
+    from routes import quotes, calculator, production
 app.include_router(quotes.router, prefix="/api/quotes", tags=["quotes"])
 app.include_router(calculator.router, prefix="/api/calculate", tags=["calculator"])
 app.include_router(production.router, prefix="/api/production", tags=["production"])

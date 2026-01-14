@@ -1,10 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
-from database import get_db
-from models import Quote
-from optimiza_corte import OptimizadorMecatronicoFinal
-from routes.calculator import generate_pieces
+try:
+    from backend.database import get_db
+    from backend.models import Quote
+    from backend.optimiza_corte import OptimizadorMecatronicoFinal
+    from backend.routes.calculator import generate_pieces
+except ImportError:
+    from database import get_db
+    from models import Quote
+    from optimiza_corte import OptimizadorMecatronicoFinal
+    from routes.calculator import generate_pieces
 import os
 import zipfile
 import io

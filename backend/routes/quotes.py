@@ -1,9 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from database import get_db
-from models import Quote, Lead
-from schemas import QuoteCreate, QuoteResponse, LeadCreate, LeadResponse
+try:
+    from backend.database import get_db
+    from backend.models import Quote, Lead
+    from backend.schemas import QuoteCreate, QuoteResponse, LeadCreate, LeadResponse
+except ImportError:
+    from database import get_db
+    from models import Quote, Lead
+    from schemas import QuoteCreate, QuoteResponse, LeadCreate, LeadResponse
 
 router = APIRouter()
 
