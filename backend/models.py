@@ -1,6 +1,9 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime, Text, JSON
 from sqlalchemy.sql import func
-from database import Base
+try:
+    from backend.database import Base
+except ImportError:
+    from database import Base
 
 class Quote(Base):
     __tablename__ = "quotes"
