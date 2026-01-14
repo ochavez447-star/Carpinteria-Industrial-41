@@ -1,0 +1,40 @@
+{
+    "melamine": [
+        {
+            "id": "roble_nordico",
+            "name": "Roble Nórdico",
+            "category": "wood_tones",
+            "thickness_15mm": 1250.00,
+            "thickness_18mm": 1450.00,
+            "texture": "/textures/roble_nordico.jpg",
+            "color_hex": "#8B6F47"
+        },
+        {
+            "id": "blanco_oslo",
+            "name": "Blanco Oslo",
+            "category": "neutrals",
+            "thickness_15mm": 1100.00,
+            "thickness_18mm": 1300.00,
+            "texture": "/textures/blanco_oslo.jpg",
+            "color_hex": "#F5F5F0"
+        },
+        {
+            "id": "nogal_terracota",
+            "name": "Nogal Terracota",
+            "category": "wood_tones",
+            "thickness_15mm": 1350.00,
+            "thickness_18mm": 1550.00,
+            "texture": "/textures/nogal_terracota.jpg",
+            "color_hex": "#5D4037"
+        },
+        {
+            "id": "gris_humo",
+            "name": "Gris Humo",
+            "category": "neutrals",
+            "thickness_15mm": 1150.00,
+            "thickness_18mm": 1350.00,
+            "texture": "/textures/gris_humo.jpg",
+            "color_hex": "#9E9E9E"
+        }
+    ]
+}
