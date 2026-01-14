@@ -47,6 +47,7 @@ app.include_router(production.router, prefix="/api/production", tags=["productio
 
 @app.get("/")
 def read_root():
+    return {"message": "Madera Precisa API is running"}
 
 if __name__ == "__main__":
     import uvicorn
