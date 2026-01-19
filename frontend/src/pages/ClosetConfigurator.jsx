@@ -8,8 +8,8 @@ import toast from 'react-hot-toast';
 export default function ClosetConfigurator() {
     const {
         width, height, depth, modules,
-        melamine, thickness, hasDoors, doorsOpen, internalConfig,
-        setDimension, setMelamine, setThickness, setHasDoors, setDoorsOpen, setModuleType
+        melamine, thickness, hasDoors, doorsOpen, internalConfig, internalConfigExtras,
+        setDimension, setMelamine, setThickness, setHasDoors, setDoorsOpen, setModuleType, setInternalConfigExtra
     } = useConfiguratorStore();
 
     const [showCustomerForm, setShowCustomerForm] = useState(false);
@@ -79,9 +79,9 @@ export default function ClosetConfigurator() {
             <h1 className="text-4xl font-bold text-brand-dark mb-2">Configurador de Clósets 3D</h1>
             <p className="text-gray-600 mb-8">Diseña tu clóset personalizado y obtén una cotización instantánea</p>
 
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8">
                 {/* Left Panel - Controls */}
-                <div className="flex flex-col h-[600px] bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="flex flex-col h-auto lg:h-[600px] bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                     {/* Tabs Header */}
                     <div className="flex border-b border-gray-200">
                         {[
@@ -198,29 +198,55 @@ export default function ClosetConfigurator() {
                                     <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Distribución Interior</h3>
                                     <div className="space-y-3">
                                         {Array.from({ length: modules }).map((_, i) => (
-                                            <div key={i} className="flex items-center gap-4 p-3 border border-gray-100 rounded-lg hover:border-brand-wood/30 transition-colors bg-white">
-                                                <div className="w-8 h-8 rounded-full bg-brand-light text-brand-wood flex items-center justify-center font-bold text-sm">
-                                                    {i + 1}
+                                            <div key={i} className="flex flex-col gap-3 p-3 border border-gray-100 rounded-lg hover:border-brand-wood/30 transition-colors bg-white">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-8 h-8 rounded-full bg-brand-light text-brand-wood flex items-center justify-center font-bold text-sm">
+                                                        {i + 1}
+                                                    </div>
+                                                    <div className="flex-1 grid grid-cols-2 gap-2">
+                                                        {[
+                                                            { id: 'shelves', label: 'Repisas' },
+                                                            { id: 'drawers', label: 'Cajones' },
+                                                            { id: 'hanging_short', label: 'C. Doble' },
+                                                            { id: 'hanging_long', label: 'C. Largo' }
+                                                        ].map((opt) => (
+                                                            <button
+                                                                key={opt.id}
+                                                                onClick={() => setModuleType(i, opt.id)}
+                                                                className={`text-xs py-1.5 px-2 rounded-md transition-all ${(internalConfig[i] || 'shelves') === opt.id
+                                                                    ? 'bg-brand-wood text-white shadow-sm'
+                                                                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                                                    }`}
+                                                            >
+                                                                {opt.label}
+                                                            </button>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                                <div className="flex-1 grid grid-cols-2 gap-2">
-                                                    {[
-                                                        { id: 'shelves', label: 'Repisas' },
-                                                        { id: 'drawers', label: 'Cajones' },
-                                                        { id: 'hanging_short', label: 'C. Doble' },
-                                                        { id: 'hanging_long', label: 'C. Largo' }
-                                                    ].map((opt) => (
-                                                        <button
-                                                            key={opt.id}
-                                                            onClick={() => setModuleType(i, opt.id)}
-                                                            className={`text-xs py-1.5 px-2 rounded-md transition-all ${(internalConfig[i] || 'shelves') === opt.id
-                                                                ? 'bg-brand-wood text-white shadow-sm'
-                                                                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
-                                                                }`}
-                                                        >
-                                                            {opt.label}
-                                                        </button>
-                                                    ))}
-                                                </div>
+
+                                                {/* Drawer Count Control */}
+                                                {internalConfig[i] === 'drawers' && (
+                                                    <div className="flex items-center justify-end gap-3 pl-12">
+                                                        <span className="text-xs font-medium text-gray-500">Cantidad:</span>
+                                                        <div className="flex items-center gap-2 bg-gray-50 rounded-md p-1">
+                                                            <button
+                                                                onClick={() => {
+                                                                    const current = internalConfigExtras?.[i]?.drawers || 3;
+                                                                    if (current > 1) setInternalConfigExtra(i, 'drawers', current - 1);
+                                                                }}
+                                                                className="w-6 h-6 flex items-center justify-center rounded bg-white shadow-sm text-gray-600 hover:text-brand-wood font-bold"
+                                                            >-</button>
+                                                            <span className="text-sm font-bold w-4 text-center">{internalConfigExtras?.[i]?.drawers || 3}</span>
+                                                            <button
+                                                                onClick={() => {
+                                                                    const current = internalConfigExtras?.[i]?.drawers || 3;
+                                                                    if (current < 8) setInternalConfigExtra(i, 'drawers', current + 1);
+                                                                }}
+                                                                className="w-6 h-6 flex items-center justify-center rounded bg-white shadow-sm text-gray-600 hover:text-brand-wood font-bold"
+                                                            >+</button>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
@@ -303,7 +329,7 @@ export default function ClosetConfigurator() {
                 </div>
 
                 {/* Right Panel - 3D Viewer */}
-                <div className="lg:sticky lg:top-24 h-[600px] bg-gray-100 rounded-2xl overflow-hidden shadow-inner border border-gray-200">
+                <div className="lg:sticky lg:top-24 h-[400px] lg:h-[600px] bg-gray-100 rounded-2xl overflow-hidden shadow-inner border border-gray-200">
                     <ClosetViewer3D
                         width={width}
                         height={height}
@@ -313,6 +339,7 @@ export default function ClosetConfigurator() {
                         hasDoors={hasDoors}
                         doorsOpen={doorsOpen}
                         internalConfig={internalConfig}
+                        internalConfigExtras={internalConfigExtras}
                     />
                 </div>
             </div>

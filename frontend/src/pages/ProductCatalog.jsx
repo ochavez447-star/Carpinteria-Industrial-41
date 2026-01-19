@@ -25,7 +25,7 @@ const PRODUCTS = [
         id: 'pino',
         name: 'Tabla de Pino',
         description: 'Madera de pino de primera calidad, ideal para picar o presentar alimentos. Tono claro y veta suave.',
-        image: '/assets/wood-pine.jpg',
+        image: '/assets/wood-pine-new.png',
         defaultPrice: 145,
         type: 'pino'
     },

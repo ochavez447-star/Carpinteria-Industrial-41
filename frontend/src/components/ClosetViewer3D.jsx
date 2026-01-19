@@ -4,7 +4,7 @@ import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
-function ClosetModel({ width, height, depth, modules, melamine, hasDoors, doorsOpen, internalConfig = {} }) {
+function ClosetModel({ width, height, depth, modules, melamine, hasDoors, doorsOpen, internalConfig = {}, internalConfigExtras = {} }) {
     const texture = useTexture(melamine.texture);
 
     // Configure texture for realistic wood grain
@@ -27,18 +27,19 @@ function ClosetModel({ width, height, depth, modules, melamine, hasDoors, doorsO
         const innerH = h - thickness * 2;
 
         switch (type) {
-            case 'drawers': // 3 Drawers at bottom + 2 shelves above
+            case 'drawers': // Dynamic Drawers
+                const drawerCount = internalConfigExtras[moduleIndex]?.drawers || 3;
                 return (
                     <group position={[xPos, 0, 0]}>
-                        {/* 3 Drawers */}
-                        {Array.from({ length: 3 }).map((_, i) => (
+                        {/* Dynamic Drawers */}
+                        {Array.from({ length: drawerCount }).map((_, i) => (
                             <mesh key={`drawer-${i}`} position={[0, -h / 2 + thickness + 0.1 + (i * 0.2), d / 2 - 0.02]}>
                                 <boxGeometry args={[innerW - 0.005, 0.19, 0.02]} /> {/* Drawer Front */}
                                 <meshStandardMaterial map={texture} roughness={0.6} />
                             </mesh>
                         ))}
                         {/* Drawer boxes (behind fronts) - simplified */}
-                        {Array.from({ length: 3 }).map((_, i) => (
+                        {Array.from({ length: drawerCount }).map((_, i) => (
                             <mesh key={`drawerbox-${i}`} position={[0, -h / 2 + thickness + 0.1 + (i * 0.2), 0]}>
                                 <boxGeometry args={[innerW - 0.01, 0.18, d - 0.05]} />
                                 <meshStandardMaterial color="#333" />
@@ -238,7 +239,7 @@ function ClosetModel({ width, height, depth, modules, melamine, hasDoors, doorsO
     );
 }
 
-export default function ClosetViewer3D({ width, height, depth, modules, melamine, hasDoors, doorsOpen, internalConfig }) {
+export default function ClosetViewer3D({ width, height, depth, modules, melamine, hasDoors, doorsOpen, internalConfig, internalConfigExtras }) {
     const controlsRef = useRef();
 
     return (
@@ -285,6 +286,7 @@ export default function ClosetViewer3D({ width, height, depth, modules, melamine
                     hasDoors={hasDoors}
                     doorsOpen={doorsOpen}
                     internalConfig={internalConfig}
+                    internalConfigExtras={internalConfigExtras}
                 />
 
                 {/* Ground plane for shadows */}

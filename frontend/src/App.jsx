@@ -9,6 +9,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Vestidores from './pages/Vestidores';
 import OtherProducts from './pages/OtherProducts';
 import AcrylicConfigurator from './pages/AcrylicConfigurator';
+import SalesConfigurator from './pages/SalesConfigurator';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/configurador" element={<ClosetConfigurator />} />
+            <Route path="/configurador-ventas" element={<SalesConfigurator />} />
             <Route path="/productos" element={<ProductCatalog />} />
             <Route path="/vestidores" element={<Vestidores />} />
             <Route path="/otros-productos" element={<OtherProducts />} />

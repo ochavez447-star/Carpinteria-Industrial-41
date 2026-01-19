@@ -24,7 +24,10 @@ export const useConfiguratorStore = create((set) => ({
     // Advanced Config
     hasDoors: true,
     doorsOpen: false,
+    hasDoors: true,
+    doorsOpen: false,
     internalConfig: {}, // { moduleIndex: 'type' } e.g. {0: 'shelves', 1: 'drawers'}
+    internalConfigExtras: {}, // { moduleIndex: { drawers: 3 } }
 
     // Actions
     setDimension: (key, value) => set((state) => {
@@ -39,6 +42,13 @@ export const useConfiguratorStore = create((set) => ({
     setDoorsOpen: (doorsOpen) => set({ doorsOpen }),
     setModuleType: (index, type) => set((state) => ({
         internalConfig: { ...state.internalConfig, [index]: type }
+    })),
+    // New action for extras (e.g. drawer count)
+    setInternalConfigExtra: (index, key, value) => set((state) => ({
+        internalConfigExtras: {
+            ...state.internalConfigExtras,
+            [index]: { ...state.internalConfigExtras?.[index], [key]: value }
+        }
     })),
     setCustomer: (customer) => set({ customer }),
     setQuote: (quote) => set({ quote }),

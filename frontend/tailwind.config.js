@@ -8,10 +8,17 @@ export default {
         extend: {
             colors: {
                 brand: {
-                    wood: '#6D7A4D', // Olive Green (Primary)
-                    dark: '#111111', // Almost Black (Hero)
-                    light: '#F5F5F0', // Cream
-                    accent: '#D4AF37', // Gold
+                    // "Warm Architectural" Palette (Tylko/Reform CPH Style)
+                    wood: '#4A3728', // Dark Walnut (Premium & Grounded)
+                    dark: '#1C1917', // Stone 900 (Softer than black)
+                    light: '#FAFAF9', // Stone 50 (Warm White - Not sterile)
+                    secondary: '#E7E5E4', // Stone 200 (Distinct separation)
+                    accent: '#F97316', // Bright Orange (Active UI elements)
+                    border: '#D6D3D1', // Stone 300 (UI Borders)
+
+                    // Legacy Backups
+                    // wood: '#6D7A4D',
+                    // accent: '#EA580C', 
                 },
             },
             fontFamily: {
